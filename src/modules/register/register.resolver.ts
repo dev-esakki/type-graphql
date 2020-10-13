@@ -13,7 +13,10 @@ export class BookResolver {
      */
     @Authorized() //need auth checker defined in server/index.ts
     @Query(() => User)
-    async hello(@Arg("firstName") firstName: string, @Ctx() ctx: any): Promise<User | undefined > {
+    async hello(
+        @Arg("firstName") firstName: string, 
+        @Ctx() ctx: any
+    ): Promise<User | undefined > {
         console.log(ctx.req.headers.userid)
         const user = await User.findOne({ where: { firstName: firstName }});
         if(!user) {

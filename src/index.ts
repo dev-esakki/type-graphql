@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from 'type-graphql'
-import { BookResolver } from './modules/register/register.resolver';
+//import { BookResolver } from './modules/register/register.resolver';
 
 //import { Resolver, Query } from "type-graphql";
 //import {User} from "./entity/User";
@@ -24,12 +24,11 @@ import { BookResolver } from './modules/register/register.resolver';
 }).catch(error => console.log(error)); */
 
 
-
 async function main() { 
     await createConnection()
     const schema = await buildSchema({
-        resolvers: [BookResolver], 
-        //resolvers: ["./**/*.resolver.ts"],
+        //resolvers: [BookResolver], 
+        resolvers: [__dirname + "/modules/**/*.resolver.ts"],
         authChecker: ({ context: { req } }: any): any => {
             return !!req.headers.userid
         }
