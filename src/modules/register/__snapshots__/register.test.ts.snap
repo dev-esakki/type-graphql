@@ -14,3 +14,18 @@ Object {
   },
 }
 `;
+
+exports[`register createUser user mutation 1`] = `
+Object {
+  "data": Object {
+    "createUser": Object {
+      "age": 20,
+      "email": "Osbaldo_Gaylord26@gmail.com",
+      "firstName": "Felix",
+      "id": "26",
+      "lastName": "Botsford",
+      "username": "Felix Botsford",
+    },
+  },
+}
+`;

@@ -48,7 +48,7 @@ describe('register', () => {
         expect(result.data!.hello.firstName).toBe("esakki");
     })
 
-    it('adduser user mutation', async() => {
+    it('createUser user mutation', async() => {
         expect.assertions(2) //how many test to run
         const inputUser = `
         mutation createUser($data: RegisterInput!) {
@@ -81,6 +81,62 @@ describe('register', () => {
         expect(result).toMatchObject({
             data: {
                 createUser: {
+                id: expect.any(String),
+                firstName: expect.any(String),
+                lastName: expect.any(String),
+                email: expect.any(String),
+                username: expect.any(String),
+                age: expect.any(Number),
+              }
+            }
+        });
+        expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
+
+    });
+
+    it('adduser user mutation', async() => {
+        expect.assertions(2) //how many test to run
+        const inputUser = `
+        mutation adduser(
+            $firstName: String!
+            $lastName: String!
+            $email: String!
+            $age: Float!
+            $password: String!
+        ) {
+            adduser(
+                firstName: $firstName
+                lastName: $lastName
+                email: $email
+                age: $age
+                password: $password
+            ) {
+                id
+                firstName
+                lastName
+                email
+                username
+                age
+            }
+          }`
+          const user = {
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName(),
+            email: faker.internet.email(),
+            age: 20,
+            password: faker.internet.password(),
+            amount: 100
+          };
+          const result = await gCall({
+            source: inputUser,
+            variableValues: {
+                data: user
+            },
+            userid: "testsdsd"
+        })
+        expect(result).toMatchObject({
+            data: {
+                addUser: {
                 id: expect.any(String),
                 firstName: expect.any(String),
                 lastName: expect.any(String),

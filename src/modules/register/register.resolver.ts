@@ -57,6 +57,7 @@ export class BookResolver {
      * insert user
      */
     @Mutation(() => User)
+    @UseMiddleware(auth, logger) //custom middleware
     async createUser(
         @Arg("data") { firstName, lastName, age, email, password }: RegisterInput,
     ): Promise<User> {
