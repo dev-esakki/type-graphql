@@ -6,7 +6,7 @@ import { IsUserAlreadyExist } from "./validationConstrain";
 
 
 @InputType() 
-export class RegisterInput extends Mixins(PasswordInput) {
+export class RegisterInput extends Mixins(PasswordInput) { //mixins are used to add extra fields present shared query
     @Field() 
     //@Length(1, 20)
     firstName: string;
@@ -23,6 +23,6 @@ export class RegisterInput extends Mixins(PasswordInput) {
     email: string;
 
     /**
-     * password input in pasword input field controlled by mixins
+     * password input in pasword input present in extended password input field
      */
 }

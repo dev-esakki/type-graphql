@@ -1,7 +1,7 @@
 import { logger } from './../middleware/logger';
 import { auth } from './../middleware/auth';
 import { RegisterInput } from './registerInput';
-import { Query, FieldResolver, Root, Mutation, Arg, Authorized, UseMiddleware, Ctx } from 'type-graphql';
+import { Query, FieldResolver, Root, Mutation, Arg, Authorized, UseMiddleware } from 'type-graphql';
 import { Resolver } from 'type-graphql';
 import { User } from '../../entity/User';
 
@@ -15,9 +15,9 @@ export class BookResolver {
     @Query(() => User)
     async hello(
         @Arg("firstName") firstName: string, 
-        @Ctx() ctx: any
+        //@Ctx() ctx: any
     ): Promise<User | undefined > {
-        console.log(ctx.req.headers.userid)
+        //console.log(ctx.req.headers.userid)
         const user = await User.findOne({ where: { firstName: firstName }});
         if(!user) {
             throw new Error("no_user_exists")

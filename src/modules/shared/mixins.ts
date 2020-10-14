@@ -4,7 +4,7 @@ export const Mixins = <T extends ClassType>(BaseClass: T) => {
    @InputType()
    class OkInput extends BaseClass {
      @Field()
-     ok: boolean
+     amount: number
    }
    return OkInput;
 }
