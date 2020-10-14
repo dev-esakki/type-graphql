@@ -17,19 +17,25 @@ afterAll(async() => {
 
 describe('register', () => {
     it("get user by name", async() => {
-        expect.assertions(3) //how many test to run
+        expect.assertions(4) //how many test to run
         const getUser = `
         query {
             hello(firstName: "esakki") {
-            id
-            firstName
-            lastName
-            age
-            username
-            email
+                id
+                firstName
+                lastName
+                age
+                username
+                email
             }
         }
         `
+        //without userid
+        const userAccess = await gCall({
+            source: getUser,
+        })
+        expect(userAccess.errors?.values).toThrow()
+
         const result = await gCall({
             source: getUser,
             userid: "testsdsd"
@@ -41,6 +47,7 @@ describe('register', () => {
                 lastName: expect.any(String),
                 email: expect.any(String),
                 age: expect.any(Number),
+                username: expect.any(String),
               }
             }
         });
@@ -129,14 +136,12 @@ describe('register', () => {
           };
           const result = await gCall({
             source: inputUser,
-            variableValues: {
-                data: user
-            },
+            variableValues: user,
             userid: "testsdsd"
         })
         expect(result).toMatchObject({
             data: {
-                addUser: {
+                adduser: {
                 id: expect.any(String),
                 firstName: expect.any(String),
                 lastName: expect.any(String),

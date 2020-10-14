@@ -3,13 +3,13 @@
 exports[`register adduser user mutation 1`] = `
 Object {
   "data": Object {
-    "createUser": Object {
+    "adduser": Object {
       "age": 20,
-      "email": "Otis.Heller@hotmail.com",
-      "firstName": "Vallie",
-      "id": "23",
-      "lastName": "Bogisich",
-      "username": "Vallie Bogisich",
+      "email": "Jarrett_Howell@hotmail.com",
+      "firstName": "Aliza",
+      "id": "71",
+      "lastName": "Borer",
+      "username": "Aliza Borer",
     },
   },
 }
@@ -20,11 +20,11 @@ Object {
   "data": Object {
     "createUser": Object {
       "age": 20,
-      "email": "Osbaldo_Gaylord26@gmail.com",
-      "firstName": "Felix",
-      "id": "26",
-      "lastName": "Botsford",
-      "username": "Felix Botsford",
+      "email": "Alec.Pfannerstill6@hotmail.com",
+      "firstName": "Urban",
+      "id": "70",
+      "lastName": "Emard",
+      "username": "Urban Emard",
     },
   },
 }
