@@ -158,11 +158,11 @@ describe('register', () => {
     });
 
     it("random number ", () => {
-        const helpers = { randomnumber }
-        helpers.randomnumber = jest.fn();
-        const result = randomnumber(1, 1);
-        expect(result).toBeGreaterThan(0)
-        expect(result).toBeTruthy()
+
+        const mock = jest.fn(() =>randomnumber);
+
+        expect(mock()).toBeTruthy();
+        
       });
 
       it("users ", () => {
