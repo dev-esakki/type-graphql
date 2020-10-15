@@ -1,3 +1,4 @@
+import { gCall } from './../../../test-utils/gCall';
 import { testConnection } from '../../../test-utils/connection';
 import { IGetUserByName } from '../interface';
 
@@ -38,7 +39,40 @@ describe('test', () => {
     } catch (e){
       expect(e.message).toBe("no_user_exists");
     }
-    /*  */
   });
+
+  it('upload user mutation', async() => {
+    expect.assertions(1) //how many test to run
+    const inputUser = `mutation updatePhoto($data: PhotoInput!){
+      updatePhoto(
+        data: $data
+      ) {
+        id
+        userid
+        image
+      }
+    }`
+      const userPhoto = {
+        userid: 1,
+        image: "test.png"
+      };
+      const result = await gCall({
+        source: inputUser,
+        variableValues: {
+            data: userPhoto
+        },
+        userid: "testsdsd"
+    })
+    expect(result).toMatchObject({
+        data: {
+          updatePhoto: {
+            id: expect.any(String),
+            image: expect.any(String),
+            userid: expect.any(Number),
+          }
+        }
+    });
+
+});
 
 });

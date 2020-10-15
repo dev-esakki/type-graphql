@@ -19,44 +19,6 @@ afterEach(() => jest.resetAllMocks());
 
 
 describe('register', () => {
-    it("get user by name", async() => {
-        expect.assertions(4) //how many test to run
-        const getUser = `
-        query {
-            hello(firstName: "esakki") {
-                id
-                firstName
-                lastName
-                age
-                username
-                email
-            }
-        }
-        `
-        //without userid
-        const userAccess = await gCall({
-            source: getUser,
-        })
-        expect(userAccess.errors?.values).toThrow()
-
-        const result = await gCall({
-            source: getUser,
-            userid: "testsdsd"
-        })
-        expect(result).toMatchObject({
-            data: {
-                hello: {
-                firstName: expect.any(String),
-                lastName: expect.any(String),
-                email: expect.any(String),
-                age: expect.any(Number),
-                username: expect.any(String),
-              }
-            }
-        });
-        expect(result).toBeDefined();
-        expect(result.data!.hello.firstName).toBe("esakki");
-    })
 
     it('createUser user mutation', async() => {
         expect.assertions(1) //how many test to run
@@ -103,6 +65,49 @@ describe('register', () => {
         //expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
 
     });
+
+    it("get user by name", async() => {
+        //expect.assertions(4) //how many test to run
+        const getUser = `
+        query {
+            hello(firstName: "esakki") {
+                id
+                firstName
+                lastName
+                age
+                username
+                email
+            }
+        }
+        `
+
+        //without userid
+        const userAccess = await gCall({
+            source: getUser,
+        })
+        try {
+            const result = await gCall({
+                source: getUser,
+                userid: "testsdsd"
+            })
+            expect(result).toMatchObject({
+                data: {
+                    hello: {
+                    firstName: expect.any(String),
+                    lastName: expect.any(String),
+                    email: expect.any(String),
+                    age: expect.any(Number),
+                    username: expect.any(String),
+                  }
+                }
+            });
+            expect(result).toBeDefined();
+            expect(result.data!.hello.firstName).toBe("esakki");
+
+        } catch (e) {
+            expect(userAccess.errors?.values).toThrow()
+        }        
+    })
 
     it('adduser user mutation', async() => {
         expect.assertions(1) //how many test to run
