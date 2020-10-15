@@ -159,10 +159,12 @@ describe('register', () => {
 
     it("random number ", () => {
 
-        const mock = jest.fn(() =>randomnumber);
-
-        expect(mock()).toBeTruthy();
-        
+        const mock = jest.fn((a,b) =>randomnumber(a,b));
+        let result = mock(1,10);
+        expect(result).toBeGreaterThan(0);
+        expect(mock).toHaveBeenCalled();
+        expect(mock).toHaveBeenCalledTimes(1);
+        expect(mock).toHaveBeenCalledWith(1,10);
       });
 
       it("users ", () => {
