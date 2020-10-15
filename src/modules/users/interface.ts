@@ -2,6 +2,13 @@ import { User } from './../../entity/User';
 /**
  * get user interface
  */
-interface IGetUserByName {
-    getUser(): Promise<User>
+export interface IGetUserByName {
+    getUser(string: string): Promise<User>
+}
+
+/**
+ * user types
+ */
+export const userTypes = {
+    IGetUserByName: Symbol.for("IGetUserByName"),
 }

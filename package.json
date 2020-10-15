@@ -5,7 +5,7 @@
    "devDependencies": {
       "@types/faker": "^5.1.2",
       "@types/jest": "^26.0.14",
-      "@types/node": "^8.0.29",
+      "@types/node": "^8.10.64",
       "class-validator": "^0.12.2",
       "faker": "^5.1.0",
       "jest": "^26.5.3",

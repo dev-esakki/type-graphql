@@ -1,10 +1,11 @@
-import { gCall } from './../../test-utils/gCall';
+import { gCall } from '../../../test-utils/gCall';
 import faker from 'faker'
-import { testConnection } from './../../test-utils/connection';
+import { testConnection } from '../../../test-utils/connection';
 import { Connection } from 'typeorm';
-import randomnumber, { users } from './random'
+import randomnumber, { users } from '../random'
 
 
+//default jest configured in tsConfig.json
 let connection: Connection;
 beforeAll( async() => {
     connection = await testConnection()

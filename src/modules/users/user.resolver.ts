@@ -1,5 +1,7 @@
 import { User } from './../../entity/User';
 import { Resolver, Arg, Query } from "type-graphql";
+import container from '../containers';
+import GetUserByName from './getUserByName';
 
 @Resolver()
 export class UserResolver {
@@ -9,14 +11,9 @@ export class UserResolver {
     @Query(() => User)
     async getUserWithname(
         @Arg("firstName") firstName: string, 
-        //@Ctx() ctx: any
     ): Promise<User | undefined > {
-        //console.log(ctx.req.headers.userid)
-        const user = await User.findOne({ where: { firstName: firstName }});
-        if(!user) {
-            throw new Error("no_user_exists")
-        }
-        
-        return user
+        const fields = container.resolve(GetUserByName)
+        const getFields = await fields.getUser(firstName) 
+        return getFields;
     }
 }
