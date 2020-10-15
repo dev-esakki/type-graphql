@@ -58,7 +58,7 @@ describe('register', () => {
     })
 
     it('createUser user mutation', async() => {
-        expect.assertions(2) //how many test to run
+        expect.assertions(1) //how many test to run
         const inputUser = `
         mutation createUser($data: RegisterInput!) {
             createUser(
@@ -99,12 +99,12 @@ describe('register', () => {
               }
             }
         });
-        expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
+        //expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
 
     });
 
     it('adduser user mutation', async() => {
-        expect.assertions(2) //how many test to run
+        expect.assertions(1) //how many test to run
         const inputUser = `
         mutation adduser(
             $firstName: String!
@@ -153,7 +153,7 @@ describe('register', () => {
               }
             }
         });
-        expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
+        //expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
 
     });
 

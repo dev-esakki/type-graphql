@@ -67,5 +67,5 @@ export class BookResolver {
         }
         const user = await User.create(input).save();
         return user;
-    }
+    }    
 }
