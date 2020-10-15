@@ -2,7 +2,7 @@ import { gCall } from './../../test-utils/gCall';
 import faker from 'faker'
 import { testConnection } from './../../test-utils/connection';
 import { Connection } from 'typeorm';
-
+import randomnumber from './random'
 
 
 let connection: Connection;
@@ -154,6 +154,14 @@ describe('register', () => {
         expect(result).toMatchSnapshot() //to get the result snapshot and updated --verbose in package json
 
     });
+
+    it("random number ", () => {
+        const helpers = { randomnumber }
+        helpers.randomnumber = jest.fn().mockReturnValue('random numbers');
+        const result = randomnumber(1, 1);
+        expect(result).toBeGreaterThan(0)
+        expect(result).toBeTruthy()
+      });
 
 })
 

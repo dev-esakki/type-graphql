@@ -28,6 +28,7 @@ export class BookResolver {
     /**
      * field resolver in resolver
      * field resolver to add in return type 
+     * defined in entity
      */
     @FieldResolver() 
     async username(@Root() parent: User) {
