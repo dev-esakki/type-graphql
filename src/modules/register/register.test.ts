@@ -2,7 +2,7 @@ import { gCall } from './../../test-utils/gCall';
 import faker from 'faker'
 import { testConnection } from './../../test-utils/connection';
 import { Connection } from 'typeorm';
-import randomnumber from './random'
+import randomnumber, { users } from './random'
 
 
 let connection: Connection;
@@ -13,6 +13,8 @@ beforeAll( async() => {
 afterAll(async() => {
     await connection.close()
 })
+
+afterEach(() => jest.resetAllMocks());
 
 
 describe('register', () => {
@@ -161,6 +163,20 @@ describe('register', () => {
         const result = randomnumber(1, 1);
         expect(result).toBeGreaterThan(0)
         expect(result).toBeTruthy()
+      });
+
+      it("users ", () => {
+        const helpers = { users }
+        helpers.users = jest.fn().mockResolvedValue([
+            {
+                "age": expect.any(Number),
+                "email": expect.any(String),
+                "firstName": expect.any(String),
+                "id": expect.any(String),
+                "lastName": expect.any(String),
+                "username": expect.any(String),
+            }
+        ]);
       });
 
 })

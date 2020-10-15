@@ -5,11 +5,11 @@ Object {
   "data": Object {
     "adduser": Object {
       "age": 20,
-      "email": "Gabriella_Glover@gmail.com",
-      "firstName": "Timmy",
-      "id": "111",
-      "lastName": "Walker",
-      "username": "Timmy Walker",
+      "email": "Marina.Ritchie99@gmail.com",
+      "firstName": "Zoie",
+      "id": "163",
+      "lastName": "Mann",
+      "username": "Zoie Mann",
     },
   },
 }
@@ -20,11 +20,11 @@ Object {
   "data": Object {
     "createUser": Object {
       "age": 20,
-      "email": "Kole50@yahoo.com",
-      "firstName": "Kevon",
-      "id": "110",
-      "lastName": "Corwin",
-      "username": "Kevon Corwin",
+      "email": "Geoffrey_Johnston@hotmail.com",
+      "firstName": "Rachelle",
+      "id": "162",
+      "lastName": "Von",
+      "username": "Rachelle Von",
     },
   },
 }
