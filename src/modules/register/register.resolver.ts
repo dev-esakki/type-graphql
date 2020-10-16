@@ -1,30 +1,14 @@
 import { logger } from './../middleware/logger';
 import { auth } from './../middleware/auth';
-import { RegisterInput } from './registerInput';
-import { Query, FieldResolver, Root, Mutation, Arg, Authorized, UseMiddleware } from 'type-graphql';
+import { RegisterInput } from './graphInputs/registerInput';
+import { FieldResolver, Root, Mutation, Arg, UseMiddleware } from 'type-graphql';
 import { Resolver } from 'type-graphql';
 import { User } from '../../entity/User';
 
 
 @Resolver(User) //need to add for FieldResolver
-export class BookResolver {
-    /**
-     * query 
-     */
-    @Authorized() //need auth checker defined in server/index.ts
-    @Query(() => User)
-    async hello(
-        @Arg("firstName") firstName: string, 
-        //@Ctx() ctx: any
-    ): Promise<User | undefined > {
-        //console.log(ctx.req.headers.userid)
-        const user = await User.findOne({ where: { firstName: firstName }});
-        if(!user) {
-            throw new Error("no_user_exists")
-        }
-        
-        return user
-    }
+export class RegisterResolver {
+   
     /**
      * field resolver in resolver
      * field resolver to add in return type 

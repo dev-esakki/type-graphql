@@ -1,8 +1,8 @@
-import { Mixins } from './../shared/mixins';
+import { Mixins } from '../../sharedInputs/mixins';
 import { PasswordInput } from './passwordInput';
 import { InputType, Field } from "type-graphql";
 import { IsEmail } from "class-validator";
-import { IsUserAlreadyExist } from "./validationConstrain";
+import { IsUserAlreadyExist } from "../constrains/validationConstrain";
 
 
 @InputType() 
