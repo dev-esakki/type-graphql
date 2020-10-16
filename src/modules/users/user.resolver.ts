@@ -4,6 +4,7 @@ import { Photo } from './../../entity/userPhoto';
 import { Resolver, Arg, Query, Mutation, Authorized } from "type-graphql";
 import container from '../containers';
 import GetUserByName from './getUserByName';
+import { getConnection } from 'typeorm';
 
 @Resolver()
 export class UserResolver {
@@ -18,6 +19,15 @@ export class UserResolver {
         //@Ctx() ctx: any
     ): Promise<User | undefined > {
         //console.log(ctx.req.headers.userid)
+        const masterQueryRunner = getConnection().createQueryRunner("slave");
+
+        const usersList  = await getConnection().createQueryBuilder()
+        
+        .from(User, "user")
+        .setQueryRunner(masterQueryRunner)
+        .where("user.firstName = ", {firstName})
+        .getOne();
+        console.log(usersList)
         const user = await User.findOne({ where: { firstName: firstName }});
         if(!user) {
             throw new Error("no_user_exists")

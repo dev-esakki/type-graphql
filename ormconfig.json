@@ -1,52 +1,111 @@
-[
-   {
-      "name": "default",
-      "type": "mysql",
-      "host": "localhost",
-      "port": 3306,
-      "username": "root",
-      "password": "Trio@123",
-      "database": "test",
-      "synchronize": true,
-      "logging": false,
-      "entities": [
-         "src/entity/**/*.ts"
+{
+   "type": "mysql",
+   "logging": true,
+   "replication": {
+     "master": [
+         {
+            "name": "default",
+            "type": "mysql",
+            "host": "localhost",
+            "port": 3306,
+            "username": "root",
+            "password": "Trio@123",
+            "database": "Master",
+            "synchronize": true,
+            "logging": false,
+            "entities": [
+               "src/entity/**/*.ts"
+            ],
+            "migrations": [
+               "src/migration/**/*.ts"
+            ],
+            "subscribers": [
+               "src/subscriber/**/*.ts"
+            ],
+            "cli": {
+               "entitiesDir": "src/entity",
+               "migrationsDir": "src/migration",
+               "subscribersDir": "src/subscriber"
+            }
+         },
+         {
+            "name": "secondry",
+            "type": "mysql",
+            "host": "localhost",
+            "port": 3306,
+            "username": "root",
+            "password": "Trio@123",
+            "database": "Master1",
+            "synchronize": true,
+            "logging": false,
+            "entities": [
+               "src/entity/**/*.ts"
+            ],
+            "migrations": [
+               "src/migration/**/*.ts"
+            ],
+            "subscribers": [
+               "src/subscriber/**/*.ts"
+            ],
+            "cli": {
+               "entitiesDir": "src/entity",
+               "migrationsDir": "src/migration",
+               "subscribersDir": "src/subscriber"
+            }
+         }
       ],
-      "migrations": [
-         "src/migration/**/*.ts"
-      ],
-      "subscribers": [
-         "src/subscriber/**/*.ts"
-      ],
-      "cli": {
-         "entitiesDir": "src/entity",
-         "migrationsDir": "src/migration",
-         "subscribersDir": "src/subscriber"
+     "slaves": [
+      {
+         "name": "default",
+         "type": "mysql",
+         "host": "localhost",
+         "port": 3306,
+         "username": "root",
+         "password": "Trio@123",
+         "database": "Slave",
+         "synchronize": true,
+         "logging": false,
+         "entities": [
+            "src/entity/**/*.ts"
+         ],
+         "migrations": [
+            "src/migration/**/*.ts"
+         ],
+         "subscribers": [
+            "src/subscriber/**/*.ts"
+         ],
+         "cli": {
+            "entitiesDir": "src/entity",
+            "migrationsDir": "src/migration",
+            "subscribersDir": "src/subscriber"
+         }
+      },
+      {
+         "name": "secondry",
+         "type": "mysql",
+         "host": "localhost",
+         "port": 3306,
+         "username": "root",
+         "password": "Trio@123",
+         "database": "Slave1",
+         "synchronize": true,
+         "logging": false,
+         "entities": [
+            "src/entity/**/*.ts"
+         ],
+         "migrations": [
+            "src/migration/**/*.ts"
+         ],
+         "subscribers": [
+            "src/subscriber/**/*.ts"
+         ],
+         "cli": {
+            "entitiesDir": "src/entity",
+            "migrationsDir": "src/migration",
+            "subscribersDir": "src/subscriber"
+         }
       }
-   },
-   {
-      "name": "secondry",
-      "type": "mysql",
-      "host": "localhost",
-      "port": 3306,
-      "username": "root",
-      "password": "Trio@123",
-      "database": "test1",
-      "synchronize": true,
-      "logging": false,
-      "entities": [
-         "src/entity/**/*.ts"
-      ],
-      "migrations": [
-         "src/migration/**/*.ts"
-      ],
-      "subscribers": [
-         "src/subscriber/**/*.ts"
-      ],
-      "cli": {
-         "entitiesDir": "src/entity",
-         "migrationsDir": "src/migration",
-         "subscribersDir": "src/subscriber"
-      }
+     ],
+    "selector": "RR" 
    }
-]
+ }

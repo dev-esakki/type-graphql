@@ -1,11 +1,11 @@
 import { gqSchema } from './schema';
 import "reflect-metadata";
-import { createConnections } from "typeorm";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server";
 
 
 async function main() { 
-    await createConnections()
+    await createConnection()
     const schema = await gqSchema()
     const server = new ApolloServer({ 
         schema,
