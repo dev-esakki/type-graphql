@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 import { ObjectType, Field, ID, Root } from "type-graphql";
 
 @ObjectType()
-@Entity({ database: "Master" }) //database name
+@Entity() //database name { database: "Master" }
 export class User extends BaseEntity {
 
     @Field(() => ID) //graphql return type

@@ -19,21 +19,27 @@ export class UserResolver {
         //@Ctx() ctx: any
     ): Promise<User | undefined > {
         //console.log(ctx.req.headers.userid)
-        const masterQueryRunner = getConnection().createQueryRunner("slave");
+        const slaveQueryRunner = getConnection().createQueryRunner("slave");
+        try {
+            const connection = getConnection().getRepository(User);
+            const usersList  = await connection.createQueryBuilder()            
+            .from(User, "user")
+            .setQueryRunner(slaveQueryRunner)
+            .where("user.firstName = ", {firstName})
+            .getOne();
+            console.log(usersList)
 
-        const usersList  = await getConnection().createQueryBuilder()
-        
-        .from(User, "user")
-        .setQueryRunner(masterQueryRunner)
-        .where("user.firstName = ", {firstName})
-        .getOne();
-        console.log(usersList)
-        const user = await User.findOne({ where: { firstName: firstName }});
-        if(!user) {
-            throw new Error("no_user_exists")
+        } finally {
+            slaveQueryRunner.release();
+            const user = await User.findOne({ where: { firstName: firstName }});
+            if(!user) {
+                throw new Error("no_user_exists")
+            }
+            
+            return user
         }
+
         
-        return user
     }
 
     

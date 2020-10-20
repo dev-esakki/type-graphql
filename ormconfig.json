@@ -2,110 +2,43 @@
    "type": "mysql",
    "logging": true,
    "replication": {
-     "master": [
+     "master": 
          {
             "name": "default",
             "type": "mysql",
-            "host": "localhost",
+            "host": "192.168.0.250",
             "port": 3306,
             "username": "root",
-            "password": "Trio@123",
-            "database": "Master",
-            "synchronize": true,
-            "logging": false,
-            "entities": [
-               "src/entity/**/*.ts"
-            ],
-            "migrations": [
-               "src/migration/**/*.ts"
-            ],
-            "subscribers": [
-               "src/subscriber/**/*.ts"
-            ],
-            "cli": {
-               "entitiesDir": "src/entity",
-               "migrationsDir": "src/migration",
-               "subscribersDir": "src/subscriber"
-            }
-         },
-         {
-            "name": "secondry",
-            "type": "mysql",
-            "host": "localhost",
-            "port": 3306,
-            "username": "root",
-            "password": "Trio@123",
-            "database": "Master1",
-            "synchronize": true,
-            "logging": false,
-            "entities": [
-               "src/entity/**/*.ts"
-            ],
-            "migrations": [
-               "src/migration/**/*.ts"
-            ],
-            "subscribers": [
-               "src/subscriber/**/*.ts"
-            ],
-            "cli": {
-               "entitiesDir": "src/entity",
-               "migrationsDir": "src/migration",
-               "subscribersDir": "src/subscriber"
-            }
+            "password": "Trio#123",
+            "database": "master",
+            "synchronize": true          
          }
-      ],
+      ,
      "slaves": [
       {
-         "name": "default",
+         "name": "slaved",
          "type": "mysql",
-         "host": "localhost",
+         "host": "192.168.0.175",
          "port": 3306,
          "username": "root",
-         "password": "Trio@123",
-         "database": "Slave",
-         "synchronize": true,
-         "logging": false,
-         "entities": [
-            "src/entity/**/*.ts"
-         ],
-         "migrations": [
-            "src/migration/**/*.ts"
-         ],
-         "subscribers": [
-            "src/subscriber/**/*.ts"
-         ],
-         "cli": {
-            "entitiesDir": "src/entity",
-            "migrationsDir": "src/migration",
-            "subscribersDir": "src/subscriber"
-         }
-      },
-      {
-         "name": "secondry",
-         "type": "mysql",
-         "host": "localhost",
-         "port": 3306,
-         "username": "root",
-         "password": "Trio@123",
-         "database": "Slave1",
-         "synchronize": true,
-         "logging": false,
-         "entities": [
-            "src/entity/**/*.ts"
-         ],
-         "migrations": [
-            "src/migration/**/*.ts"
-         ],
-         "subscribers": [
-            "src/subscriber/**/*.ts"
-         ],
-         "cli": {
-            "entitiesDir": "src/entity",
-            "migrationsDir": "src/migration",
-            "subscribersDir": "src/subscriber"
-         }
+         "password": "Trio#123",
+         "database": "master",
+         "synchronize": true                
       }
-     ],
-    "selector": "RR" 
+     ]
+   },
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
    }
  }
