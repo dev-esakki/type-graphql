@@ -66,8 +66,37 @@ relay_log                 = /var/log/mysql/mysql-relay-bin.log
 Login to the master database using the command mysql -u root -p and then add the below commands
 
 ```
-CHANGE MASTER TO MASTER_HOST='192.168.0.250', MASTER_USER='root', MASTER_PASSWORD='Trio#123', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=1366;    //master details
+CHANGE MASTER TO MASTER_HOST='192.168.0.250', MASTER_USER='root', MASTER_PASSWORD='Test#123', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=1366;    //master details
 START SLAVE;
 SHOW SLAVE STATUS\G
 
+```
+## Database Creation
+Login to your master database and create a table and insert some values
+```
+CREATE DATABASE master;
+
+USE master;
+
+CREATE TABLE user (
+    id int NOT NULL AUTO_INCREMENT,
+    lastName varchar(255) NOT NULL,
+    firstName varchar(255),
+    Age int,
+    email varchar(255),
+    password varchar(255),
+    PRIMARY KEY (id)
+);
+
+INSERT INTO user (firstName,lastName, Age, email, password)
+VALUES ('sdfs','sdfsdf', 20, "devs@mail.com", "aaasd");
+
+```
+
+## Slave Replication
+When You login to the slave database and check the replicated data with the below commands
+
+```
+USE master;
+SELECT * FROM user;
 ```
