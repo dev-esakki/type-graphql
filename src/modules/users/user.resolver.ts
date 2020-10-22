@@ -16,30 +16,19 @@ export class UserResolver {
     @Query(() => User)
     async hello(
         @Arg("firstName") firstName: string, 
-        //@Ctx() ctx: any
     ): Promise<User | undefined > {
-        //console.log(ctx.req.headers.userid)
         const slaveQueryRunner = getConnection().createQueryRunner("slave");
         try {
             const connection = getConnection().getRepository(User);
-            const usersList  = await connection.createQueryBuilder()            
-            .from(User, "user")
+            const usersList  = await connection.createQueryBuilder("user")                        
             .setQueryRunner(slaveQueryRunner)
-            .where("user.firstName = ", {firstName})
+            .where("user.firstName = :firstName", {firstName })
             .getOne();
             console.log(usersList)
-
+            return usersList
         } finally {
             slaveQueryRunner.release();
-            const user = await User.findOne({ where: { firstName: firstName }});
-            if(!user) {
-                throw new Error("no_user_exists")
-            }
-            
-            return user
-        }
-
-        
+        }        
     }
 
     

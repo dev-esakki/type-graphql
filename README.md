@@ -38,7 +38,7 @@ bind-address            = 0.0.0.0
 server-id               = 1
 log_bin                 = /var/log/mysql/mysql-bin.log
 expire_logs_days        = 10
-max_binlog_size   = 100M
+max_binlog_size         = 100M
 binlog_do_db            = master
 
 GRANT REPLICATION SLAVE ON *.* TO 'root'@'%'IDENTIFIED BY 'Trio#123'; //master user and pwd

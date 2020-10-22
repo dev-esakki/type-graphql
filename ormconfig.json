@@ -4,25 +4,21 @@
    "replication": {
      "master": 
          {
-            "name": "default",
-            "type": "mysql",
             "host": "192.168.0.250",
             "port": 3306,
             "username": "root",
             "password": "Trio#123",
-            "database": "master",
+            "database": "mydb",
             "synchronize": true          
          }
       ,
      "slaves": [
       {
-         "name": "slaved",
-         "type": "mysql",
          "host": "192.168.0.175",
          "port": 3306,
          "username": "root",
          "password": "Trio#123",
-         "database": "master",
+         "database": "mydb",
          "synchronize": true                
       }
      ]
