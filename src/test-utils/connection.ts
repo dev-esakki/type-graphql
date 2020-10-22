@@ -4,11 +4,11 @@ export const testConnection = (drop: boolean = false) => {
     return createConnection(
         {
             "type": "mysql",
-            "host": "localhost",
+            "host": "192.168.0.175",
             "port": 3306,
             "username": "root",
             "password": "Trio@123",
-            "database": "test",
+            "database": "mydb",
             "synchronize": true,
             "logging": false,
             "dropSchema": drop,
