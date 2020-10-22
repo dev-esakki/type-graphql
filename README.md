@@ -1,63 +1,73 @@
-Mysql:
-root
-Trio@123
-mysql -h localhost -u root -p
-show databases;
-use databasename;
-CREATE DATABASE test1;
-DROP DATABASE databasename;
-show tables;
+# Master - Slave configuration
 
-CREATE USER 'root'@'localhost' IDENTIFIED BY 'Trio@123';
-GRANT ALL PRIVILEGES ON  *.* to 'root'@'localhost';
-mysql> GRANT REPLICATION SLAVE ON *.* TO 'root'@'%' IDENTIFIED BY 'Trio@123';
-mysql> FLUSH PRIVILEGES;
-mysql> FLUSH TABLES WITH READ LOCK;
-mysql> SHOW MASTER STATUS;
 
-====================================
-CREATE DATABASE master;
+## Master Config
 
-USE master;
+configure the mysql master instance with the below commands.
+```
+- nano /etc/mysql/mysql.conf.d/mysqld.cnf 
+- server-id               = 1
+- bind-address   = 0.0.0.0
+- skip-grant-tables [geant accecc to all ip's, add below mysqld ]
+- log_bin                 = /var/log/mysql/mysql-bin.log
+- expire_logs_days        = 10
+- max_binlog_size         = 100M
+- binlog_do_db            = master [dbname]
+```
 
-CREATE TABLE MyGuests (
-    Personid int NOT NULL AUTO_INCREMENT,
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    Age int,
-    PRIMARY KEY (Personid)
-);
+## Restart the mysql and check the status for master
+```
+- sudo systemctl restart mysql
+- sudo systemctl status mysql
+```
 
-INSERT INTO MyGuests (FirstName,LastName, Age)
-VALUES ('React','NODE', 20);
 
-On master database
-=======================
-nano /etc/mysql/mysql.conf.d/mysqld.cnf
-bind-address            = 0.0.0.0
-server-id               = 1
-log_bin                 = /var/log/mysql/mysql-bin.log
-expire_logs_days        = 10
-max_binlog_size         = 100M
-binlog_do_db            = master
+---
+## Master database
 
-GRANT REPLICATION SLAVE ON *.* TO 'root'@'%'IDENTIFIED BY 'Trio#123'; //master user and pwd
-FLUSH PRIVILEGES;
-FLUSH TABLES WITH READ LOCK;
-UNLOCK TABLES;
+Login to the master database using the command mysql -u root -p and then add the below commands
+```
+- GRANT REPLICATION SLAVE ON *.* TO 'root'@'%'IDENTIFIED BY 'Test#123';
+- FLUSH PRIVILEGES;
+- FLUSH TABLES WITH READ LOCK;
+- UNLOCK TABLES;
+- SHOW MASTER STATUS\G
+```
 
-file: mysql-bin.000001 |     position: 1366 | db: master 
+when the check the master status you have got the file and position. collect the details
+```
+- file: mysql-bin.000001 
+- position: 1366
+```
 
-on slave database
-=====================
-server-id               = 2
-log_bin                 = /var/log/mysql/mysql-bin.log
-expire_logs_days        = 10
-max_binlog_size   = 100M
-binlog_do_db            = master
-relay_log               = /var/log/mysql/mysql-relay-bin.log
+---
+##  Slave Config
+configure the mysql slave instance with the below commands.
+```
+- nano /etc/mysql/mysql.conf.d/mysqld.cnf 
+- server-id               = 2
+- bind-address   = 0.0.0.0
+- skip-grant-tables [geant accecc to all ip's, add below mysqld ]
+- log_bin                 = /var/log/mysql/mysql-bin.log
+- expire_logs_days        = 10
+- max_binlog_size         = 100M
+- binlog_do_db            = master [dbname]
+relay_log                 = /var/log/mysql/mysql-relay-bin.log
+```
+---
 
+## Restart the mysql and check the status for slave
+```
+- sudo systemctl restart mysql
+- sudo systemctl status mysql
+```
+---
+## Slave database
+Login to the master database using the command mysql -u root -p and then add the below commands
+
+```
 CHANGE MASTER TO MASTER_HOST='192.168.0.250', MASTER_USER='root', MASTER_PASSWORD='Trio#123', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=1366;    //master details
 START SLAVE;
-SHOW SLAVE STATUS;
-=========================
+SHOW SLAVE STATUS\G
+
+```
