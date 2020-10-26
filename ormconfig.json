@@ -1,10 +1,11 @@
 {
    "type": "mysql",
-   "logging": true,
+   "logging": false,
    "replication": {
      "master": 
          {
-            "host": "192.168.0.250",
+            "__master__": "192.168.0.250",
+            "host": "localhost", 
             "port": 3306,
             "username": "root",
             "password": "Trio#123",
@@ -14,7 +15,8 @@
       ,
      "slaves": [
       {
-         "host": "192.168.0.175",
+         "__slaves__": "192.168.0.175",
+         "host": "localhost",
          "port": 3306,
          "username": "root",
          "password": "Trio#123",

@@ -17,14 +17,18 @@ export class UserResolver {
     async hello(
         @Arg("firstName") firstName: string, 
     ): Promise<User | undefined > {
-        const slaveQueryRunner = getConnection().createQueryRunner("slave");
+        const slaveQueryRunner = getConnection().createQueryRunner("master");
         try {
             const connection = getConnection().getRepository(User);
             const usersList  = await connection.createQueryBuilder("user")                        
             .setQueryRunner(slaveQueryRunner)
             .where("user.firstName = :firstName", {firstName })
-            .getOne();
-            console.log(usersList)
+            .getOne();    
+            console.log("usersList", usersList)  
+            if(!usersList) {
+                throw new Error("No_User_Found")
+            }   
+
             return usersList
         } finally {
             slaveQueryRunner.release();

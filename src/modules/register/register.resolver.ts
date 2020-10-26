@@ -1,9 +1,10 @@
 import { logger } from './../middleware/logger';
 import { auth } from './../middleware/auth';
 import { RegisterInput } from './graphInputs/registerInput';
-import { FieldResolver, Root, Mutation, Arg, UseMiddleware } from 'type-graphql';
+import { FieldResolver, Root, Mutation, Arg, UseMiddleware, Field, ObjectType } from 'type-graphql';
 import { Resolver } from 'type-graphql';
 import { User } from '../../entity/User';
+import {  getConnection } from 'typeorm';
 
 
 @Resolver(User) //need to add for FieldResolver
@@ -41,15 +42,36 @@ export class RegisterResolver {
     /**
      * insert user
      */
-    @Mutation(() => User)
+    @Mutation(() => Test)
     @UseMiddleware(auth, logger) //custom middleware
     async createUser(
         @Arg("data") { firstName, lastName, age, email, password }: RegisterInput,
-    ): Promise<User> {
+    ): Promise<{id: number} | any> {
         const input = {
             firstName, lastName, age, email, password
         }
-        const user = await User.create(input).save();
-        return user;
+        const masterQuery = getConnection().createQueryRunner("master");
+        try {
+            const connection = getConnection().getRepository(User);
+            const usersList  = await connection.createQueryBuilder()
+            .setQueryRunner(masterQuery)
+            .insert()
+            .into(User)            
+            .values([
+                input
+            ])      
+            .execute();
+            console.log(usersList.generatedMaps[0])
+            return usersList.generatedMaps[0]
+        } finally {
+            masterQuery.release();
+        }
     }    
+}
+
+
+@ObjectType()
+class Test {
+    @Field()
+    id: number;
 }
