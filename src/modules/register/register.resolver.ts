@@ -1,10 +1,11 @@
 import { logger } from './../middleware/logger';
 import { auth } from './../middleware/auth';
 import { RegisterInput } from './graphInputs/registerInput';
-import { FieldResolver, Root, Mutation, Arg, UseMiddleware, Field, ObjectType } from 'type-graphql';
+import { FieldResolver, Root, Mutation, Arg, UseMiddleware } from 'type-graphql';
 import { Resolver } from 'type-graphql';
 import { User } from '../../entity/User';
 import {  getConnection } from 'typeorm';
+import TypeCreateUser from './schemas/createUser';
 
 
 @Resolver(User) //need to add for FieldResolver
@@ -42,7 +43,7 @@ export class RegisterResolver {
     /**
      * insert user
      */
-    @Mutation(() => Test)
+    @Mutation(() => TypeCreateUser)
     @UseMiddleware(auth, logger) //custom middleware
     async createUser(
         @Arg("data") { firstName, lastName, age, email, password }: RegisterInput,
@@ -67,11 +68,4 @@ export class RegisterResolver {
             masterQuery.release();
         }
     }    
-}
-
-
-@ObjectType()
-class Test {
-    @Field()
-    id: number;
 }
