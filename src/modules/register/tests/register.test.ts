@@ -27,11 +27,6 @@ describe('register.ts', () => {
                 data: $data
             ) {
                 id
-                firstName
-                lastName
-                email
-                username
-                age
             }
           }`
           const user = {
@@ -52,12 +47,7 @@ describe('register.ts', () => {
         expect(result).toMatchObject({
             data: {
                 createUser: {
-                id: expect.any(String),
-                firstName: expect.any(String),
-                lastName: expect.any(String),
-                email: expect.any(String),
-                username: expect.any(String),
-                age: expect.any(Number),
+                id: expect.any(Number),
               }
             }
         });

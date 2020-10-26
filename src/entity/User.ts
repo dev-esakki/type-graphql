@@ -37,4 +37,7 @@ export class User extends BaseEntity {
         return `${parent.firstName} ${parent.lastName}` 
     }
 
+    /* @Column({ type: "varchar", length: 15, default: "react"})
+    location: string; */
+
 }
