@@ -42,4 +42,15 @@ describe('test', () => {
     }
   }); 
 
+  it('this keyword ', async() => {
+      
+      const result = fields
+      let spy = jest.spyOn(result, 'testThis').mockImplementation(async(name): Promise<string> => {
+        return name
+      });
+      const res = await result.testThis("hello")
+      expect(res).toBe("hello")
+      spy.mockRestore();
+  }); 
+
 });
