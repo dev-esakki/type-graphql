@@ -5,3 +5,5 @@ build/
 tmp/
 temp/
 coverage/
+uploads/
+testImages/
