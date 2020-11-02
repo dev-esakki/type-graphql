@@ -6,6 +6,10 @@ import container from '../containers';
 import GetUserByName from './getUserByName';
 import { getConnection } from 'typeorm';
 import InsertReturn from '../register/schemas/createUser'
+import { GraphQLUpload } from 'graphql-upload';
+import { createWriteStream } from "fs";
+import { Upload } from './interface';
+import { join } from 'path';
 
 @Resolver()
 export class UserResolver {
@@ -100,5 +104,21 @@ export class UserResolver {
         } finally {
             slaveQueryRunner.release();
         }        
+    }
+
+    @Mutation(() => Boolean)
+    async addProfilePicture(@Arg("picture", () => GraphQLUpload)
+    {
+      createReadStream,
+    }: Upload): Promise<boolean> {
+    const filename = "user.png";
+    const path = join(__dirname + `/../../../uploads/${filename}`)
+      return new Promise(async (resolve, reject) =>
+        createReadStream()
+          .pipe(createWriteStream(path))
+          .on("finish", () => resolve(true))
+          .on("error", () => reject(false))
+      );
+
     }
 }

@@ -2,6 +2,8 @@ import { testConnection } from './../../../test-utils/connection';
 
 import { gCall } from './../../../test-utils/gCall';
 import { Connection } from 'typeorm';
+import { createReadStream } from 'fs';
+import { resolve } from 'path';
 
 let connection: Connection;
 beforeAll( async() => {
@@ -65,8 +67,6 @@ describe('user.resolver.ts', () => {
             data: $data
           ) {
             id
-            userid
-            image
           }
         }`
           const userPhoto = {
@@ -83,12 +83,32 @@ describe('user.resolver.ts', () => {
         expect(result).toMatchObject({
             data: {
               updatePhoto: {
-                id: expect.any(String),
-                image: expect.any(String),
-                userid: expect.any(Number),
+                id: expect.any(Number),
               }
             }
         });
     
       });
+
+
+      it("file upload testing", async() => {
+        const filename = `user.png`
+        const file = createReadStream(resolve(`./testImages/${filename}`))
+        const inputUser = `mutation  addProfilePicture($picture: Upload!)  {
+          addProfilePicture(picture: $picture) 
+        }`;
+        //let rand = Math.random().toString(36).substring(7);
+        const result = await gCall({
+          source: inputUser,
+          variableValues: {
+            picture: new Promise(resolve => resolve({
+                createReadStream: () => file,
+                stream: file,
+            })),
+          },
+          userid: "testsdsd"
+        })
+        console.log(result)
+
+      })
 })
