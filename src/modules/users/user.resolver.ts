@@ -5,6 +5,7 @@ import { Resolver, Arg, Query, Mutation, Authorized } from "type-graphql";
 import container from '../containers';
 import GetUserByName from './getUserByName';
 import { getConnection } from 'typeorm';
+import InsertReturn from '../register/schemas/createUser'
 
 @Resolver()
 export class UserResolver {
@@ -24,7 +25,6 @@ export class UserResolver {
             .setQueryRunner(slaveQueryRunner)
             .where("user.firstName = :firstName", {firstName })
             .getOne();    
-            console.log("usersList", usersList)  
             if(!usersList) {
                 throw new Error("No_User_Found")
             }   
@@ -51,14 +51,54 @@ export class UserResolver {
     /**
      * update user photo
      */    
-    @Mutation(() => Photo)
+    @Mutation(() => InsertReturn)
     async updatePhoto(
         @Arg("data") { userid, image }: PhotoInput,
-    ): Promise<Photo> {
+    ): Promise<Photo | any> {
         const input = {
             userid, image
         }
-        const user = await Photo.create(input).save();
-        return user;
+        const masterQuery = getConnection().createQueryRunner("master");
+        try {
+            const connection = getConnection().getRepository(Photo);
+            const photoList  = await connection.createQueryBuilder()
+            .setQueryRunner(masterQuery)
+            .insert()
+            .into(Photo)            
+            .values([
+                input
+            ])      
+            .execute();
+            return photoList.generatedMaps[0]
+        } finally {
+            masterQuery.release();
+        }
     }  
+
+     /**
+     * query 
+     */
+    @Authorized() //need auth checker defined in server/index.ts
+    @Query(() => User)
+    async getUserById(
+        @Arg("id") id: string, 
+    ): Promise<User | undefined > {
+        const slaveQueryRunner = getConnection().createQueryRunner("master");
+        try {
+            
+            const connection = getConnection().getRepository(User);
+            const usersList  = await connection.createQueryBuilder("user")                        
+            .setQueryRunner(slaveQueryRunner)
+            .where("user.id = :id", {id })
+            .leftJoinAndSelect("user.photo", "Photo")
+            .getOne();    
+            if(!usersList) {
+                throw new Error("No_User_Found")
+            }   
+            console.log(usersList)
+            return usersList
+        } finally {
+            slaveQueryRunner.release();
+        }        
+    }
 }

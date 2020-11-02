@@ -5,7 +5,7 @@ import { FieldResolver, Root, Mutation, Arg, UseMiddleware } from 'type-graphql'
 import { Resolver } from 'type-graphql';
 import { User } from '../../entity/User';
 import {  getConnection } from 'typeorm';
-import TypeCreateUser from './schemas/createUser';
+import InsertReturn from './schemas/createUser';
 
 
 @Resolver(User) //need to add for FieldResolver
@@ -43,7 +43,7 @@ export class RegisterResolver {
     /**
      * insert user
      */
-    @Mutation(() => TypeCreateUser)
+    @Mutation(() => InsertReturn)
     @UseMiddleware(auth, logger) //custom middleware
     async createUser(
         @Arg("data") { firstName, lastName, age, email, password }: RegisterInput,

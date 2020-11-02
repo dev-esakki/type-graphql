@@ -1,11 +1,12 @@
 {
    "type": "mysql",
    "logging": false,
-   "synchronize": false, 
+   "synchronize": true, 
    "replication": {
      "master": 
          {
             "__master__": "192.168.0.250",
+            "name": "mydb",
             "host": "localhost", 
             "port": 3306,
             "username": "root",
@@ -16,6 +17,7 @@
      "slaves": [
       {
          "__slaves__": "192.168.0.175",
+         "name": "mydb",
          "host": "localhost",
          "port": 3306,
          "username": "root",

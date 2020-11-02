@@ -1,8 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { ObjectType, Field, ID, Root } from "type-graphql";
+import { Photo } from "./userPhoto";
 
 @ObjectType()
-@Entity() //database name { database: "Master" }
+@Entity({ name: "users"}) //database name { database: "Master" }
 export class User extends BaseEntity {
 
     @Field(() => ID) //graphql return type
@@ -40,4 +41,16 @@ export class User extends BaseEntity {
     /* @Column({ type: "varchar", length: 15, default: "react"})
     location: string; */
 
+    //@OneToOne(() => Photo)
+    @OneToOne(() => Photo) 
+    @JoinColumn()
+    photo: Photo;
+
+    @CreateDateColumn({ name: 'created_at', nullable: false })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at', nullable: true })
+    updatedAt: Date;
+
+    
 }
