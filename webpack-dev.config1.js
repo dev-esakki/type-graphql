@@ -8,7 +8,7 @@ function localExternals(context, request, callback) {
     return callback(null, `commonjs ${request}`);
   }
   return callback();
-}
+} 
 
 const entitesConfig = {
   target: 'node',
