@@ -8,8 +8,10 @@
       "@types/jest": "^26.0.14",
       "@types/node": "^8.10.64",
       "class-validator": "^0.12.2",
+      "eslint": "^7.31.0",
       "faker": "^5.1.0",
       "jest": "^26.5.3",
+      "pre-commit": "^1.2.2",
       "ts-jest": "^26.4.1",
       "ts-node": "3.3.0",
       "ts-node-dev": "^1.0.0-pre.63",
@@ -24,7 +26,11 @@
       "type-graphql": "^1.0.0",
       "typeorm": "0.2.25"
    },
+   "pre-commit": [
+      "eslint"
+   ],
    "scripts": {
+      "eslint": "./pre-commit-eslint.sh",
       "start": "ts-node-dev --respawn --exit-child ./src/index.ts",
       "db:setup": "ts-node ./src/test-utils/setUp.ts",
       "test": "npm run db:setup && jest --verbose --coverage",
